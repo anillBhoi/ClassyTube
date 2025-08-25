@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { YoutubeIcon, Github, Users, LogOut, User, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/nextjs";
+import { Play, Star, BookOpen, BarChart3, Search, Bookmark } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,16 +30,23 @@ export function Header() {
 
   return (
     <>
-      <header className="border-b border-gray-800 bg-black sticky top-0 z-50">
+      <header className="border-b border-gray-800 bg-white sticky top-0 z-50">
         <div className="container flex h-16 items-center justify-between px-4">
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <YoutubeIcon className="h-6 w-6 text-red-500" />
-            <Link href="/" className="text-xl font-bold text-white">
+       
+
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 bg-white rounded-lg px-4 py-2 shadow-sm border border-slate-200">
+              <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center">
+                <Play className="h-5 w-5 text-white" fill="currentColor" />
+              </div>
+              <Link href="/" className="text-xl font-bold text-slate-800 tracking-tight">
               ClassyTube
             </Link>
-           
+             
+            </div>
           </div>
+          
 
           {/* User Profile, GitHub, and Dashboard */}
           
@@ -47,27 +55,25 @@ export function Header() {
             
             <Link
               href="/dashboard"
-              className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition"
+              className=" flex items-center gap-2 bg-white rounded-lg px-4 py-2 shadow-sm border border-slate-200 text-xl   tracking-tight px-4 py-2 bg-gray-200 text-black rounded-md hover:bg-gray-200 transition"
+              
             >
               Dashboard
             </Link>
             <Link
               href="/course"
-              className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition"
+              className="flex items-center gap-2 bg-white rounded-lg px-4 py-2 shadow-sm border border-slate-200 text-xl   tracking-tight px-4 py-2 bg-gray-200 text-black rounded-md hover:bg-gray-200 transition"
             >
               My Course
             </Link>
-            <Badge variant="secondary" className="gap-1">
-              <Users className="h-3 w-3" />
-              <span>1,234 users</span>
-            </Badge>
+           
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
-                  <Avatar className="h-8 w-8 border">
+                  <Avatar className="h-12 w-12 border-gray ">
                     <AvatarImage src={avatarSrc} alt="User" />
-                    <AvatarFallback>XY</AvatarFallback>
+                    <AvatarFallback className=" flex items-center gap-2 bg-gray-200 rounded-lg px-4 py-2 shadow-sm border border-slate-400 text-xl   tracking-tight px-4 py-2  text-black rounded-md hover:bg-gray-200 transition">XY</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>

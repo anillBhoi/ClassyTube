@@ -84,16 +84,16 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
 
   return (
     
-    <div className="rounded-lg border border-gray-800 bg-gray-900 overflow-hidden relative z-10">
+    <div className="rounded-lg border border-gray-800 bg-white-900 overflow-hidden relative z-10">
       
-      <div className="p-4 border-b border-gray-800 bg-gray-800/50">
+      <div className="p-4 border-b border-gray-800 bg-purple-400/50">
         <h2 className="text-lg font-semibold">Course Content</h2>
-        <p className="text-sm text-gray-400">Complete all videos and assignments to finish the course</p>
+        <p className="text-sm text-black-400">Complete all videos and assignments to finish the course</p>
       </div>
 
       <div className="divide-y divide-gray-800">
         {videos.map((video, index) => (
-          <div key={video.id} className={`p-4 ${video.completed ? "bg-gray-800/30" : ""}`}>
+          <div key={video.id} className={`p-4 ${video.completed ? "bg-purple-900/20" : ""}`}>
             <div className="flex items-start gap-4">
 
               {/* Thumbnail */}
@@ -118,7 +118,7 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-medium line-clamp-2 cursor-pointer text-blue-400 hover:underline"
+                    <h3 className="font-medium line-clamp-2 cursor-pointer text-blue-600 hover:underline"
                     onClick={()=>onOpenModal(`https://www.youtube.com/embed/${video.id}`)}>
                       {index + 1}. {video.title}
                     </h3>
@@ -126,9 +126,9 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
                       <Checkbox
                         checked={video.completed}
                         onCheckedChange={() => toggleVideoCompletion(video.id)}
-                        className="data-[state=checked]:bg-green-500 data-[state=checked]:text-white"
+                        className="data-[state=checked]:bg-green-500 border-black data-[state=checked]:text-white"
                       />
-                      <span className="text-xs text-gray-400">
+                      <span className="text-xs text-gray-600">
                         {video.completed ? "Completed" : "Mark as completed"}
                       </span>
                     </div>
@@ -137,7 +137,7 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
      
                 <Collapsible open={!!openNotes[video.id]} onOpenChange={() => handleToggleNotes(video.id)}>
                   <CollapsibleTrigger asChild>
-                    <Button variant="ghost" size="sm" className="p-0 h-auto text-xs text-green-400 mt-2">
+                    <Button variant="ghost" size="sm" className="p-0 h-auto text-xs text-green-600 mt-2">
                       Notes
                       <ChevronDown
                         className={`h-3 w-3 ml-1 transition-transform ${

@@ -75,7 +75,7 @@ export default function LandingPage() {
                   </Button>
                 </Link>
                 <a href="#features">
-                  <Button variant="outline" className="rounded-full px-8 py-4 text-lg text-slate-700 border-slate-300 hover:bg-slate-100 transition-all flex items-center gap-2">
+                  <Button variant="outline" className="rounded-full px-8 py-4  text-lg text-slate-700 border-slate-300 hover:bg-slate-100 transition-all flex items-center gap-2">
                     <span>What's more?</span>
                     <BarChart3 className="h-5 w-5" />
                   </Button>

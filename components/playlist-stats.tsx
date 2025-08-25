@@ -16,7 +16,7 @@ export function PlaylistStats({ playlist }: PlaylistStatsProps) {
   const completionPercentage = Math.round((playlist.completedVideos / playlist.totalVideos) * 100)
 
   return (
-    <Card className="bg-gray-900 border-gray-800">
+    <Card className="bg-white-900 border-gray-800 text-bold text-black-800">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg">Your Progress</CardTitle>
       </CardHeader>
@@ -30,13 +30,13 @@ export function PlaylistStats({ playlist }: PlaylistStatsProps) {
             color="stroke-blue-500"
             className="mb-4"
           />
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-600">
             {playlist.completedVideos} of {playlist.totalVideos} videos completed
           </p>
         </div>
 
         <div className="space-y-4 pt-2">
-          <div className="flex items-center p-3 rounded-lg bg-gray-800/50">
+          <div className="flex items-center p-3 rounded-lg bg-purple-200/50">
             <Video className="h-5 w-5 mr-3 text-blue-400" />
             <div className="space-y-0.5">
               <p className="text-sm font-medium">Total Videos</p>
@@ -44,7 +44,7 @@ export function PlaylistStats({ playlist }: PlaylistStatsProps) {
             </div>
           </div>
 
-          <div className="flex items-center p-3 rounded-lg bg-gray-800/50">
+          <div className="flex items-center p-3 rounded-lg bg-purple-200/50">
             <Clock className="h-5 w-5 mr-3 text-green-400" />
             <div className="space-y-0.5">
               <p className="text-sm font-medium">Total Duration</p>
@@ -52,7 +52,7 @@ export function PlaylistStats({ playlist }: PlaylistStatsProps) {
             </div>
           </div>
 
-          <div className="flex items-center p-3 rounded-lg bg-gray-800/50">
+          <div className="flex items-center p-3 rounded-lg bg-purple-200/50">
             <Calendar className="h-5 w-5 mr-3 text-purple-400" />
             <div className="space-y-0.5">
               <p className="text-sm font-medium">Started On</p>
@@ -60,7 +60,7 @@ export function PlaylistStats({ playlist }: PlaylistStatsProps) {
             </div>
           </div>
 
-          <div className="flex items-center p-3 rounded-lg bg-gray-800/50">
+          <div className="flex items-center p-3 rounded-lg bg-purple-200/50">
             <Award className="h-5 w-5 mr-3 text-yellow-400" />
             <div className="space-y-0.5">
               <p className="text-sm font-medium">Estimated Completion</p>

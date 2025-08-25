@@ -144,14 +144,14 @@ export function PlaylistDashboard() {
   
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-8 py-12">
       {!currentPlaylist ? (
         <div className="max-w-3xl mx-auto">
 
-          <Card className="bg-gray-900 border-gray-800 overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
-              <h1 className="text-3xl font-bold mb-2">Transform YouTube into Your Learning Platform</h1>
-              <p className="text-white/80">
+          <Card className="bg-white-100 border-gray-800 overflow-hidden">
+            <div className="bg-purple-200 p-6 text-white">
+              <h1 className="text-3xl text-black font-bold mb-2">Transform YouTube into Your Learning Platform</h1>
+              <p className="text-black/80">
                 Import any YouTube playlist and turn it into an interactive course with progress tracking and
                 AI-generated assignments
               </p>
@@ -159,28 +159,28 @@ export function PlaylistDashboard() {
             <CardContent className="pt-6">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="flex flex-col space-y-2">
-                  <label htmlFor="playlist-url" className="text-sm font-medium">
+                  <label htmlFor="playlist-url" className="text-sm text-black-600 font-medium">
                     Enter YouTube Playlist URL
                   </label>
                   <div className="flex gap-2">
-                    <div className="relative flex-1">
+                    <div className="relative flex-1 ">
                       <Youtube className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-red-500" />
                       <Input
                         id="playlist-url"
                         placeholder="https://www.youtube.com/playlist?list=..."
                         value={playlistUrl}
                         onChange={(e) => setPlaylistUrl(e.target.value)}
-                        className="bg-gray-800 border-gray-700 pl-10"
+                        className="bg-gray-100 text-black border-gray-800 pl-10"
                       />
                     </div>
-                    <Button type="submit" className="bg-red-600 hover:bg-red-700" disabled={isLoading}>
+                    <Button type="submit" className="bg-green-500 hover:bg-green-200  text-xl font-bold text-slate-800 tracking-tight" disabled={isLoading}>
                       {isLoading ? (
                         <>
                           <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
                           Loading...
                         </>
                       ) : (
-                        "Import Playlist"
+                        "Transform"
                       )}
                     </Button>
                   </div>
@@ -192,37 +192,37 @@ export function PlaylistDashboard() {
                   </div>
                 )}
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-                  <div className="p-4 bg-gray-800/50 rounded-lg flex flex-col items-center text-center">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 text-black">
+                  <div className="p-4 bg-purple-500/50 rounded-lg flex flex-col items-center text-center">
                     <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center mb-3">
-                      <BookOpen className="h-6 w-6 text-blue-400" />
+                      <BookOpen className="h-8 w-8 text-blue-800" />
                     </div>
                     <h3 className="font-medium mb-1">AI-Generated Assignments</h3>
-                    <p className="text-sm text-gray-400">Practice with custom assignments for each video</p>
+                    <p className="text-sm text-black-400">Practice with custom assignments for each video</p>
                   </div>
 
-                  <div className="p-4 bg-gray-800/50 rounded-lg flex flex-col items-center text-center">
+                  <div className="p-4 bg-purple-500/50 rounded-lg flex flex-col items-center text-center">
                     <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mb-3">
-                      <RefreshCw className="h-6 w-6 text-green-400" />
+                      <RefreshCw className="h-6 w-6 text-green-800" />
                     </div>
                     <h3 className="font-medium mb-1">Progress Tracking</h3>
-                    <p className="text-sm text-gray-400">Track your progress through any YouTube playlist</p>
+                    <p className="text-sm text-black-400">Track your progress through any YouTube playlist</p>
                   </div>
 
-                  <div className="p-4 bg-gray-800/50 rounded-lg flex flex-col items-center text-center">
+                  <div className="p-4 bg-purple-500/50 rounded-lg flex flex-col items-center text-center">
                     <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center mb-3">
-                      <Share2 className="h-6 w-6 text-purple-400" />
+                      <Share2 className="h-6 w-6 text-purple-800" />
                     </div>
                     <h3 className="font-medium mb-1">Share Your Progress</h3>
-                    <p className="text-sm text-gray-400">Share your learning journey with others</p>
+                    <p className="text-sm text-black-400">Share your learning journey with others</p>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between mt-6 pt-6 border-t border-gray-800">
                   <div className="flex items-center gap-2">
-                    <Badge variant="outline" className="gap-1">
+                    <Badge variant="outline" className="gap-1 text-black">
                       <Users className="h-3 w-3" />
-                      <span>1,234 active users</span>
+                      <span>982 active users</span>
                     </Badge>
                   </div>
                 
@@ -233,8 +233,8 @@ export function PlaylistDashboard() {
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
+          <div className=" flex flex-col md:flex-row md:items-center justify-between gap-4 ">
+            <div className="flex items-center gap-4 ">
               {currentPlaylist.thumbnailUrl && (
                 <Image
                   src={currentPlaylist.thumbnailUrl || "/placeholder.svg"}
@@ -252,7 +252,7 @@ export function PlaylistDashboard() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" className="gap-1" onClick={handleShareProgress}>
+              <Button variant="outline" size="sm" className="gap-1 bg-white" onClick={handleShareProgress}>
                 <Share2 className="h-4 w-4" />
                 <span>Share Your Progress</span>
               </Button>
@@ -321,24 +321,24 @@ export function PlaylistDashboard() {
                     }}
                   />
 
-                  <Card className="bg-gray-900 border-gray-800">
+                  <Card className="bg-white-900 border-gray-800 text-black-800">
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between">
                         <h3 className="font-medium">Community Stats</h3>
-                        <Badge variant="outline">Live</Badge>
+                        <Badge variant="outline" className="text-red-800">Live</Badge>
                       </div>
 
                       <div className="mt-4 space-y-3">
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-gray-400">Active Learners</span>
+                          <span className="text-sm text-gray-600">Active Learners</span>
                           <span className="font-medium">243</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-gray-400">Completion Rate</span>
+                          <span className="text-sm text-gray-600">Completion Rate</span>
                           <span className="font-medium">68%</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-gray-400">Avg. Completion Time</span>
+                          <span className="text-sm text-gray-600">Avg. Completion Time</span>
                           <span className="font-medium">14 days</span>
                         </div>
                       </div>
@@ -348,26 +348,26 @@ export function PlaylistDashboard() {
               </div>
             </TabsContent>
             <TabsContent value="notes">
-              <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
+              <div className="bg-purple-200 border border-gray-800 rounded-lg p-6">
                 <h2 className="text-lg font-semibold mb-4">My Course Notes</h2>
-                <p className="text-gray-400 mb-6">
+                <p className="text-gray-600 mb-6">
                   Take notes as you progress through the course to help reinforce your learning.
                 </p>
 
-                <div className="min-h-[300px] bg-gray-800 rounded-lg p-4 border border-gray-700">
-                  <p className="text-gray-400 text-center py-10">
+                <div className="min-h-[300px] bg-purple-100 rounded-lg p-4 border border-gray-700">
+                  <p className="text-gray-600 text-center py-10">
                     Your notes will appear here as you add them to videos.
                   </p>
                 </div>
               </div>
             </TabsContent>
             <TabsContent value="assignments">
-              <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
+              <div className="bg-purple-200 border border-gray-800 rounded-lg p-6">
                 <h2 className="text-lg font-semibold mb-4">My Assignments</h2>
-                <p className="text-gray-400 mb-6">Track your progress on assignments for each video in the course.</p>
+                <p className="text-gray-600 mb-6">Track your progress on assignments for each video in the course.</p>
 
-                <div className="min-h-[300px] bg-gray-800 rounded-lg p-4 border border-gray-700">
-                  <p className="text-gray-400 text-center py-10">
+                <div className="min-h-[300px] bg-purple-100 rounded-lg p-4 border border-gray-700">
+                  <p className="text-gray-600 text-center py-10">
                     Complete assignments from the video list to see them here.
                   </p>
                 </div>

@@ -15,8 +15,8 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans overflow-hidden">
       {/* Simple background elements */}
-      <div className="absolute top-0 right-0 w-72 h-72 bg-blue-100/30 dark:bg-blue-900/30 rounded-full blur-3xl opacity-50"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-100/30 dark:bg-red-900/30 rounded-full blur-3xl opacity-40"></div>
+      <div className="hidden md:block absolute top-0 right-0 w-72 h-72 bg-blue-100/30 dark:bg-blue-900/30 rounded-full blur-3xl opacity-50"></div>
+      <div className="hidden md:block absolute bottom-0 left-0 w-96 h-96 bg-red-100/30 dark:bg-red-900/30 rounded-full blur-3xl opacity-40"></div>
 
       {/* Header */}
       <header className="relative z-10 w-full py-5 px-6">

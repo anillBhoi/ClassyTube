@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] })
 
 
 export const metadata: Metadata = {
-  title: "YouTube Learning Platform",
+  title: "ClassyTube",
   description: "Learn from YouTube playlists like a structured course",
     generator: 'anurag'
 }

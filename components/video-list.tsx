@@ -8,6 +8,8 @@ import { YoutubeIcon, ChevronDown, BookOpen, Award, FileText } from "lucide-reac
 import { Modal } from "./ui/modal";
 import Image from "next/image";
 import { VideoModal } from "./playvideos";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Progress } from "@/components/ui/progress";
 
 interface Video {
   id: string;
@@ -89,15 +91,55 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
       <div className="p-4 border-b border-border bg-accent/30">
         <h2 className="text-lg font-semibold">Course Content</h2>
         <p className="text-sm text-muted-foreground">Complete all videos and assignments to finish the course</p>
+        {/* Top progress bar */}
+        <div className="mt-3">
+          {(() => {
+            const total = videos.length || 1;
+            const completed = videos.filter((v) => v.completed).length;
+            const percentage = Math.round((completed / total) * 100);
+            return (
+              <div>
+                <div className="flex items-center justify-between text-xs mb-2 text-muted-foreground">
+                  <span>Progress</span>
+                  <span>
+                    {completed}/{total} • {percentage}%
+                  </span>
+                </div>
+                <Progress value={percentage} className="h-2" />
+              </div>
+            );
+          })()}
+        </div>
       </div>
 
       <div className="divide-y divide-border">
         {videos.map((video, index) => (
           <div key={video.id} className={`p-4 ${video.completed ? "bg-accent/20" : ""}`}>
-            <div className="flex items-start gap-4">
+            <div className="flex flex-col sm:flex-row items-start gap-4">
 
               {/* Thumbnail */}
-              <div className="flex-shrink-0 relative cursor-pointer"
+              {/* Mobile thumbnail (full-width) */}
+              <div className="w-full sm:hidden" onClick={()=>onOpenModal(video.id,`https://www.youtube.com/embed/${video.id}`)}>
+                {video.thumbnailUrl ? (
+                  <AspectRatio ratio={16/9} className="relative">
+                    <Image
+                      src={video.thumbnailUrl || "/placeholder.svg"}
+                      alt={video.title}
+                      fill
+                      className="rounded-md object-cover"
+                    />
+                    <div className="absolute bottom-1 right-1 bg-black/80 text-white text-xs px-1 rounded font-medium shadow-sm">{video.duration}</div>
+                  </AspectRatio>
+                ) : (
+                  <div className="w-full aspect-video bg-muted rounded-md flex items-center justify-center relative">
+                    <YoutubeIcon className="h-10 w-10 text-red-500" />
+                    <div className="absolute bottom-1 right-1 bg-black/80 text-white text-xs px-1 rounded font-medium shadow-sm">{video.duration}</div>
+                  </div>
+                )}
+              </div>
+
+              {/* Desktop thumbnail (fixed) */}
+              <div className="flex-shrink-0 relative cursor-pointer hidden sm:block"
               onClick={()=>onOpenModal(video.id,`https://www.youtube.com/embed/${video.id}`)}>
                 {video.thumbnailUrl ? (
                   <Image
@@ -112,17 +154,17 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
                     <YoutubeIcon className="h-8 w-8 text-red-500" />
                   </div>
                 )}
-                <div className="absolute bottom-1 right-1 bg-black/80 text-xs px-1 rounded">{video.duration}</div>
+                <div className="absolute bottom-1 right-1 bg-black/80 text-white text-xs px-1 rounded font-medium">{video.duration}</div>
               </div>
               {/* Description */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-medium line-clamp-2 cursor-pointer text-blue-600 hover:underline"
+                    <h3 className="font-medium line-clamp-2 cursor-pointer text-blue-600 hover:underline text-base sm:text-[1rem]"
                     onClick={()=>onOpenModal(video.id, `https://www.youtube.com/embed/${video.id}`)}>
                       {index + 1}. {video.title}
                     </h3>
-                    <div className="flex items-center gap-2 mt-1">
+                    <div className="flex items-center gap-2 mt-1 flex-wrap">
                       <Checkbox
                         checked={video.completed}
                         onCheckedChange={() => toggleVideoCompletion(video.id)}

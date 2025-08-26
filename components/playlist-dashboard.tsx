@@ -144,7 +144,7 @@ export function PlaylistDashboard() {
   
 
   return (
-    <div className="container mx-auto px-8 py-12">
+    <div className="container mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12">
       {!currentPlaylist ? (
         <div className="max-w-3xl mx-auto">
 
@@ -251,7 +251,7 @@ export function PlaylistDashboard() {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Button variant="outline" size="sm" className="gap-1" onClick={handleShareProgress}>
                 <Share2 className="h-4 w-4" />
                 <span>Share Your Progress</span>
@@ -303,7 +303,7 @@ export function PlaylistDashboard() {
                 />
               )}  
             
-            <TabsList className="mb-4">
+            <TabsList className="mb-4 w-full overflow-x-auto">
               <TabsTrigger value="videos">Videos</TabsTrigger>
               <TabsTrigger value="notes">My Notes</TabsTrigger>
               <TabsTrigger value="assignments">Assignments</TabsTrigger>

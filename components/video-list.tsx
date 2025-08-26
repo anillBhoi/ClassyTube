@@ -14,7 +14,7 @@ interface Video {
   title: string;
   description: string;
   duration: string;
-  completed: boolean;
+  completed?: boolean;
   thumbnailUrl?: string;
   progress?: number;
 }
@@ -24,7 +24,7 @@ interface PlaylistProps {
     videos: Video[];
   };
   onProgressUpdate: (completedVideos: number) => void;
-  onOpenModal: (url: string) => void;
+  onOpenModal: (videoId: string, url: string) => void;
 }
 
 export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistProps) {
@@ -84,16 +84,16 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
 
   return (
     
-    <div className="rounded-lg border border-gray-800 bg-white-900 overflow-hidden relative z-10">
+    <div className="rounded-lg border border-border bg-card overflow-hidden relative z-10">
       
-      <div className="p-4 border-b border-gray-800 bg-purple-400/50">
+      <div className="p-4 border-b border-border bg-accent/30">
         <h2 className="text-lg font-semibold">Course Content</h2>
-        <p className="text-sm text-black-400">Complete all videos and assignments to finish the course</p>
+        <p className="text-sm text-muted-foreground">Complete all videos and assignments to finish the course</p>
       </div>
 
-      <div className="divide-y divide-gray-800">
+      <div className="divide-y divide-border">
         {videos.map((video, index) => (
-          <div key={video.id} className={`p-4 ${video.completed ? "bg-purple-900/20" : ""}`}>
+          <div key={video.id} className={`p-4 ${video.completed ? "bg-accent/20" : ""}`}>
             <div className="flex items-start gap-4">
 
               {/* Thumbnail */}
@@ -108,7 +108,7 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
                     className="rounded-md object-cover"
                   />
                 ) : (
-                  <div className="w-[120px] h-[68px] bg-gray-800 rounded-md flex items-center justify-center">
+                  <div className="w-[120px] h-[68px] bg-muted rounded-md flex items-center justify-center">
                     <YoutubeIcon className="h-8 w-8 text-red-500" />
                   </div>
                 )}
@@ -119,7 +119,7 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
                 <div className="flex items-start justify-between">
                   <div>
                     <h3 className="font-medium line-clamp-2 cursor-pointer text-blue-600 hover:underline"
-                    onClick={()=>onOpenModal(`https://www.youtube.com/embed/${video.id}`)}>
+                    onClick={()=>onOpenModal(video.id, `https://www.youtube.com/embed/${video.id}`)}>
                       {index + 1}. {video.title}
                     </h3>
                     <div className="flex items-center gap-2 mt-1">
@@ -128,7 +128,7 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
                         onCheckedChange={() => toggleVideoCompletion(video.id)}
                         className="data-[state=checked]:bg-green-500 border-black data-[state=checked]:text-white"
                       />
-                      <span className="text-xs text-gray-600">
+                      <span className="text-xs text-muted-foreground">
                         {video.completed ? "Completed" : "Mark as completed"}
                       </span>
                     </div>
@@ -146,15 +146,15 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
                       />
                     </Button>
                   </CollapsibleTrigger>
-                  <CollapsibleContent className="mt-3 p-4 bg-gray-800/50 rounded-md text-sm">
+                  <CollapsibleContent className="mt-3 p-4 bg-muted rounded-md text-sm">
                     <textarea
-                      className="w-full bg-gray-900 text-white border border-gray-700 rounded-md p-2"
+                      className="w-full bg-background text-foreground border border-border rounded-md p-2"
                       placeholder="Write your notes here..."
                       value={notes[video.id] || ""}
                       onChange={(e) => handleSaveNotes(video.id, e.target.value)}
                     />
                     {notes[video.id] && (
-                      <div className="mt-4 p-2 bg-gray-700 rounded-md text-white">
+                      <div className="mt-4 p-2 bg-muted rounded-md">
                         <strong>Your Notes:</strong>
                         <p>{notes[video.id]}</p>
                       </div>
@@ -171,8 +171,8 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
                       <ChevronDown className="h-3 w-3 ml-1 transition-transform" />
                     </Button>
                   </CollapsibleTrigger>
-                  <CollapsibleContent className="mt-3 p-4 bg-gray-800/50 rounded-md text-sm">
-                    <div className="text-center text-gray-400">Coming Soon</div>
+                  <CollapsibleContent className="mt-3 p-4 bg-muted rounded-md text-sm">
+                    <div className="text-center text-muted-foreground">Coming Soon</div>
                   </CollapsibleContent>
                 </Collapsible>
 
@@ -189,8 +189,8 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
                       />
                     </Button>
                   </CollapsibleTrigger>
-                  <CollapsibleContent className="mt-3 p-4 bg-gray-800/50 rounded-md text-sm">
-                    <div className="text-center text-gray-400">Coming Soon</div>
+                  <CollapsibleContent className="mt-3 p-4 bg-muted rounded-md text-sm">
+                    <div className="text-center text-muted-foreground">Coming Soon</div>
                   </CollapsibleContent>
                 </Collapsible>
 
@@ -210,7 +210,7 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
                       />
                     </Button>
                   </CollapsibleTrigger>
-                  <CollapsibleContent className="mt-3 p-4 bg-gray-800/50 rounded-md text-sm">
+                  <CollapsibleContent className="mt-3 p-4 bg-muted rounded-md text-sm">
                     <div className="space-y-2">
                       {(documentationLinks[video.id] || []).map((link, idx) => (
                         <div key={idx} className="flex items-center justify-between">
@@ -229,13 +229,13 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
                       <input
                         type="text"
                         placeholder="Title"
-                        className="w-full bg-gray-900 text-white border border-gray-700 rounded-md p-2 mb-2"
+                        className="w-full bg-background text-foreground border border-border rounded-md p-2 mb-2"
                         id={`doc-title-${video.id}`}
                       />
                       <input
                         type="text"
                         placeholder="URL"
-                        className="w-full bg-gray-900 text-white border border-gray-700 rounded-md p-2 mb-2"
+                        className="w-full bg-background text-foreground border border-border rounded-md p-2 mb-2"
                         id={`doc-url-${video.id}`}
                       />
                       <Button
@@ -259,7 +259,6 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
         ))}
       </div>
     </div>
-   
   );
 }
 

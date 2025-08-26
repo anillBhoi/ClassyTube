@@ -17,6 +17,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ProfileDialog } from "./pop-up";
 import { useState } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Header() {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -30,17 +31,17 @@ export function Header() {
 
   return (
     <>
-      <header className="border-b border-gray-800 bg-white sticky top-0 z-50">
+      <header className="border-b sticky top-0 z-50 bg-background">
         <div className="container flex h-16 items-center justify-between px-4">
           {/* Logo */}
        
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 bg-white rounded-lg px-4 py-2 shadow-sm border border-slate-200">
+            <div className="flex items-center gap-2 rounded-lg px-4 py-2 shadow-sm border bg-background">
               <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center">
                 <Play className="h-5 w-5 text-white" fill="currentColor" />
               </div>
-              <Link href="/" className="text-xl font-bold text-slate-800 tracking-tight">
+              <Link href="/" className="text-xl font-bold tracking-tight">
               ClassyTube
             </Link>
              
@@ -55,17 +56,18 @@ export function Header() {
             
             <Link
               href="/dashboard"
-              className=" flex items-center gap-2 bg-white rounded-lg px-4 py-2 shadow-sm border border-slate-200 text-xl   tracking-tight px-4 py-2 bg-gray-200 text-black rounded-md hover:bg-gray-200 transition"
+              className="flex items-center gap-2 rounded-md px-4 py-2 bg-accent text-accent-foreground hover:bg-accent/80 transition"
               
             >
               Dashboard
             </Link>
             <Link
               href="/course"
-              className="flex items-center gap-2 bg-white rounded-lg px-4 py-2 shadow-sm border border-slate-200 text-xl   tracking-tight px-4 py-2 bg-gray-200 text-black rounded-md hover:bg-gray-200 transition"
+              className="flex items-center gap-2 rounded-md px-4 py-2 bg-accent text-accent-foreground hover:bg-accent/80 transition"
             >
               My Course
             </Link>
+            <ThemeToggle />
            
 
             <DropdownMenu>
@@ -117,7 +119,7 @@ export function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-white"
+            className="md:hidden"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             <Menu className="h-6 w-6" />
@@ -126,22 +128,23 @@ export function Header() {
 
         {/* Mobile Navigation */}
         {menuOpen && (
-          <nav className="md:hidden bg-gray-900 text-white p-4 space-y-2">
+          <nav className="md:hidden bg-background p-4 space-y-2">
             <Link
               href="/dashboard"
-              className="block px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700 transition"
+              className="block px-4 py-2 rounded-md bg-accent text-accent-foreground hover:bg-accent/80 transition"
             >
               Dashboard
             </Link>
             <Link
               href="/course"
-              className="block px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700 transition"
+              className="block px-4 py-2 rounded-md bg-accent text-accent-foreground hover:bg-accent/80 transition"
             >
               My Course
             </Link>
 
-           
-            
+            <div className="pt-2">
+              <ThemeToggle />
+            </div>
 
             {/* Profile Icon for Mobile */}
             <div className="flex justify-center mt-4">

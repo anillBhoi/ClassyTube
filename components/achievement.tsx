@@ -52,7 +52,7 @@ export function AchievementCard({ userData }: AchievementCardProps) {
     <div className="flex items-center justify-center">
       <div
         ref={cardRef}
-        className="w-full max-w-sm rounded-lg overflow-hidden border-4 border-red-600 bg-black text-white shadow-lg"
+        className="w-full max-w-sm rounded-lg overflow-hidden border-4 border-red-600 bg-card text-card-foreground shadow-lg"
       >
         <CardHeader className="pb-2 pt-6 px-6 flex justify-between items-start">
           <div>
@@ -60,7 +60,7 @@ export function AchievementCard({ userData }: AchievementCardProps) {
             
               <span className="font-bold text-xl">ClassyTube</span>
             </div>
-            <h3 className="text-sm text-gray-400">ACHIEVEMENT CARD</h3>
+            <h3 className="text-sm text-muted-foreground">ACHIEVEMENT CARD</h3>
           </div>
           <Youtube className="h-8 w-8 text-red-600" />
         </CardHeader>
@@ -77,15 +77,15 @@ export function AchievementCard({ userData }: AchievementCardProps) {
             </div>
 
             <h2 className="mt-4 text-xl font-bold break-all">{userData.email}</h2>
-            <p className="text-gray-400 text-sm break-all">{userData.email}</p>
+            <p className="text-muted-foreground text-sm break-all">{userData.email}</p>
 
             <div className="grid grid-cols-2 gap-4  w-full mt-6 text-center">
-              <div className="bg-gray-800 rounded-lg p-4 text-center">
-                <p className="text-gray-400 text-xs">Completed Videos</p>
+              <div className="bg-muted rounded-lg p-4 text-center">
+                <p className="text-muted-foreground text-xs">Completed Videos</p>
                 <p className="text-2xl font-bold">{userData.completedVideos}</p>
               </div>
-              <div className="bg-gray-800 rounded-lg p-4 text-center">
-                <p className="text-gray-400 text-xs">Playlist</p>
+              <div className="bg-muted rounded-lg p-4 text-center">
+                <p className="text-muted-foreground text-xs">Playlist</p>
                 <p className="text-sm font-medium break-words">
                   {userData.playlistName.length > 40
                     ? userData.playlistName.slice(0, 40) + "..."
@@ -94,8 +94,8 @@ export function AchievementCard({ userData }: AchievementCardProps) {
               </div>
             </div>
 
-            <div className="mt-6 w-full bg-gray-800 rounded-lg p-4">
-              <p className="text-xs text-gray-400 mb-2">Playlist</p>
+            <div className="mt-6 w-full bg-muted rounded-lg p-4">
+              <p className="text-xs text-muted-foreground mb-2">Playlist</p>
               {userData.thumbnailUrl && (
                   <img
                     src={userData.thumbnailUrl}
@@ -110,7 +110,7 @@ export function AchievementCard({ userData }: AchievementCardProps) {
 
         </CardContent>
 
-        <CardFooter className="bg-gray-800 p-4 flex justify-between items-center">
+        <CardFooter className="bg-muted p-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Youtube className="h-4 w-4 text-red-600" />
             <span className="text-xs">YouTube Learning</span>
@@ -118,7 +118,7 @@ export function AchievementCard({ userData }: AchievementCardProps) {
           <Button
             ref={downloadButtonRef}
             onClick={downloadCard}
-            className="bg-blue-600 text-white"
+            variant="default"
           >
             <Download className="mr-2 h-4 w-4" /> Don't Click
           </Button>

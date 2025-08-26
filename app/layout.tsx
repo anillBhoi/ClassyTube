@@ -21,10 +21,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const themeClass="dark"
   return (
     <ClerkProvider>
-      <html lang="en" className={themeClass} suppressHydrationWarning>
+      <html lang="en" suppressHydrationWarning>
         <head>
           <link rel="icon" href="/logo.png" />
         </head>
@@ -32,7 +31,7 @@ export default function RootLayout({
         <body className={inter.className}>
         
           
-          <ThemeProvider attribute="class" defaultTheme="dark">
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
             <Analytics/>
           </ThemeProvider>

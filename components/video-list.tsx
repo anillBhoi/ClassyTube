@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -43,6 +43,40 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
 
 
   
+  useEffect(() => {
+    // Load persisted progress by playlist (if we have a playlist id in objects)
+    const possiblePlaylistId = (playlist as any)?.id || (playlist as any)?.playlistId;
+    async function loadProgress() {
+      try {
+        const url = new URL(`/api/progress`, window.location.origin);
+        if (possiblePlaylistId) url.searchParams.set("playlistId", String(possiblePlaylistId));
+        const res = await fetch(url.toString());
+        if (!res.ok) return;
+        const data = await res.json();
+        const byVideo: Record<string, { completed: boolean; progress: number }> = data?.progressByVideo || {};
+        setVideos((prev) =>
+          prev.map((v) => ({ ...v, completed: byVideo[v.id]?.completed ?? v.completed, progress: byVideo[v.id]?.progress ?? v.progress }))
+        );
+        const completedCount = playlist.videos.filter((v) => byVideo[v.id]?.completed).length;
+        onProgressUpdate(completedCount);
+      } catch (_) {
+        // ignore
+      }
+    }
+    loadProgress();
+  }, [playlist, onProgressUpdate]);
+
+  const persistProgress = async (videoId: string, completed: boolean) => {
+    const possiblePlaylistId = (playlist as any)?.id || (playlist as any)?.playlistId;
+    try {
+      await fetch("/api/progress", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ videoId, playlistId: possiblePlaylistId, completed }),
+      });
+    } catch (_) {}
+  };
+
   const toggleVideoCompletion = (videoId: string) => {
     const updatedVideos = videos.map((video) =>
       video.id === videoId ? { ...video, completed: !video.completed } : video
@@ -51,6 +85,10 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
 
     // Pass the updated videos array to the parent component
     onProgressUpdate(updatedVideos.filter((video) => video.completed).length);
+
+    // persist
+    const current = updatedVideos.find((v) => v.id === videoId);
+    if (current) persistProgress(videoId, !!current.completed);
   };
 
   const handleToggleSection = (videoId: string, section: "quiz" | "documentation") => {
@@ -77,11 +115,15 @@ export function VideoList({ playlist, onProgressUpdate,onOpenModal }: PlaylistPr
     }));
   };
 
-  const handleSaveNotes = (videoId: string, note: string) => {
-    setNotes((prev) => ({
-      ...prev,
-      [videoId]: note,
-    }));
+  const handleSaveNotes = async (videoId: string, note: string) => {
+    setNotes((prev) => ({ ...prev, [videoId]: note }));
+    try {
+      await fetch("/api/notes", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ videoId, content: note }),
+      });
+    } catch (_) {}
   };
 
   return (

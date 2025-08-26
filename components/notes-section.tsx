@@ -17,29 +17,60 @@ export function NotesSection({ videoId, videoTitle }: NotesSectionProps) {
   const [isSaved, setIsSaved] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
 
-  // Load saved notes when component mounts
+  // Load saved notes from API when video changes
   useEffect(() => {
-    const savedNotes = localStorage.getItem(`notes-${videoId}`)
-    if (savedNotes) {
-      setNotes(savedNotes)
-      setIsSaved(true)
-    } else {
-      setNotes("")
-      setIsSaved(false)
+    let aborted = false
+    async function load() {
+      try {
+        const res = await fetch(`/api/notes?videoId=${encodeURIComponent(videoId)}`)
+        if (!res.ok) throw new Error("Failed to load notes")
+        const data = await res.json()
+        if (!aborted) {
+          const content = data?.content || ""
+          setNotes(content)
+          setIsSaved(!!content)
+        }
+      } catch (_) {
+        if (!aborted) {
+          setNotes("")
+          setIsSaved(false)
+        }
+      }
+    }
+    load()
+    return () => {
+      aborted = true
     }
   }, [videoId])
 
-  const handleSaveNotes = () => {
-    localStorage.setItem(`notes-${videoId}`, notes)
-    setIsSaved(true)
-    setIsEditing(false)
+  const handleSaveNotes = async () => {
+    try {
+      const res = await fetch("/api/notes", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ videoId, content: notes }),
+      })
+      if (!res.ok) throw new Error("Failed to save notes")
+      setIsSaved(true)
+      setIsEditing(false)
+    } catch (_) {
+      // Optionally, show a toast
+    }
   }
 
-  const handleDeleteNotes = () => {
-    localStorage.removeItem(`notes-${videoId}`)
-    setNotes("")
-    setIsSaved(false)
-    setIsEditing(false)
+  const handleDeleteNotes = async () => {
+    try {
+      const res = await fetch("/api/notes", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ videoId }),
+      })
+      if (!res.ok) throw new Error("Failed to delete notes")
+    } finally {
+      setNotes("")
+      setIsSaved(false)
+      setIsEditing(false)
+    }
   }
 
   const handleEditNotes = () => {
